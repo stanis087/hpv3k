@@ -541,6 +541,7 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
                 placeDetailIntent.putExtra( "gpSearchType", type );
                 placeDetailIntent.putExtra( "gpSearchGeoLocation", currentCoords );
                 placeDetailIntent.putExtra( "loadingCounter", loadingCounter );
+                placeDetailIntent.putExtra("placeDetail", placeDetail);
                 
                 startActivity( placeDetailIntent );
                 

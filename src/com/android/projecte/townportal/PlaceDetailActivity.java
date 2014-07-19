@@ -58,6 +58,8 @@ public class PlaceDetailActivity extends Activity {
         this.photoImageView = (ImageView) findViewById( R.id.photoImage );
         this.loadingText = (TextView) findViewById( R.id.loading );
         
+        PlaceDetail detail = (PlaceDetail) getIntent().getExtras().getSerializable("placeDetail");
+        
         // Set TextViews
         this.nameTextView.setText( getIntent().getExtras().getString( "name" ) );
         this.ratingTextView.setText( ratingToStar( (int) getIntent().getExtras().getDouble( "rating" ) ) );

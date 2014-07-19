@@ -4,6 +4,8 @@
 
 package com.android.projecte.townportal;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,7 +16,7 @@ import android.graphics.Bitmap;
  * Description: Data structure used to store details of a place
  *              in a Place Detail Activity.
  */
-public class PlaceDetail {
+public class PlaceDetail implements Serializable {
 
     public String phoneNumber = null, address = null, website = null, photoRef = null, siteName = null;
     public Bitmap sitePhoto = null;
