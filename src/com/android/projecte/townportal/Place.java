@@ -4,6 +4,8 @@
 
 package com.android.projecte.townportal;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,7 +13,7 @@ import org.json.JSONObject;
  * Place
  * Description: Data structure that holds Google Place data.
  */
-public class Place {
+public class Place implements Serializable {
 
     public String id, icon, name, vicinity, placeReference;
     public Double latitude, longitude, rating;

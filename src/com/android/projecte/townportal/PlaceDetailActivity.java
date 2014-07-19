@@ -59,18 +59,19 @@ public class PlaceDetailActivity extends Activity {
         this.loadingText = (TextView) findViewById( R.id.loading );
         this.reviewsText = (TextView) findViewById(R.id.reviews);
         
+        Place place = (Place) getIntent().getExtras().getSerializable("place");
         PlaceDetail detail = (PlaceDetail) getIntent().getExtras().getSerializable("placeDetail");
         
         // Set TextViews
-        this.nameTextView.setText( getIntent().getExtras().getString( "name" ) );
-        this.ratingTextView.setText( ratingToStar( (int) getIntent().getExtras().getDouble( "rating" ) ) );
-        this.addressTextView.setText( getIntent().getExtras().getString( "address" ) );
-        this.phoneNumberTextView.setText( getIntent().getExtras().getString( "phonenumber" ) );
+        this.nameTextView.setText(detail.siteName);
+        this.ratingTextView.setText( ratingToStar( place.rating.intValue() ) );
+        this.addressTextView.setText(detail.address);
+        this.phoneNumberTextView.setText(detail.phoneNumber);
         this.websiteTextView.setClickable( true );
         this.websiteTextView.setMovementMethod( LinkMovementMethod.getInstance() );
         this.loadingCounter = (AtomicInteger) getIntent().getExtras().getSerializable( "loadingCounter" );
         
-        String dollars = priceToDollar( getIntent().getExtras().getInt( "price" ) );
+        String dollars = priceToDollar( place.price );
         
         // Don't display dollar if it isn't there so we save space
         if ( dollars.isEmpty() )
@@ -78,10 +79,9 @@ public class PlaceDetailActivity extends Activity {
         else
             this.priceTextView.setText( dollars );
 
-        String website = getIntent().getExtras().getString( "website" );
-        
+        String website = detail.website;
         if ( website != null )
-            this.websiteTextView.setText( Html.fromHtml( "<a href=" + website + ">" + website ) );
+            this.websiteTextView.setText( Html.fromHtml( "<a href=" + website + ">" + website + "</a>"));
         
         if (!detail.reviews.isEmpty())
         {
@@ -95,7 +95,7 @@ public class PlaceDetailActivity extends Activity {
 	        this.reviewsText.setText(rbuf);
         }
         
-        PhotoTask t = new PhotoTask( getIntent().getExtras().getString( "photoRef" ) );
+        PhotoTask t = new PhotoTask(detail.photoRef);
         t.execute();
         photoTasks.add(t);
     }

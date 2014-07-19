@@ -531,17 +531,11 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
         		
         		// Load placeDetail into its activity
                 Intent placeDetailIntent = new Intent( context, PlaceDetailActivity.class );
-                placeDetailIntent.putExtra( "name", placeDetail.siteName );
-                placeDetailIntent.putExtra( "rating", place.rating );
-                placeDetailIntent.putExtra( "price", place.price );
-                placeDetailIntent.putExtra( "address", placeDetail.address );
-                placeDetailIntent.putExtra( "phonenumber", placeDetail.phoneNumber );
-                placeDetailIntent.putExtra( "website", placeDetail.website );
-                placeDetailIntent.putExtra( "photoRef", placeDetail.photoRef );
                 placeDetailIntent.putExtra( "gpSearchType", type );
                 placeDetailIntent.putExtra( "gpSearchGeoLocation", currentCoords );
                 placeDetailIntent.putExtra( "loadingCounter", loadingCounter );
                 placeDetailIntent.putExtra("placeDetail", placeDetail);
+                placeDetailIntent.putExtra("place", place);
                 
                 startActivity( placeDetailIntent );
                 
