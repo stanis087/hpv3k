@@ -80,7 +80,9 @@ public class PlaceDetailActivity extends Activity {
         if ( website != null )
             this.websiteTextView.setText( Html.fromHtml( "<a href=" + website + ">" + website ) );
         
-        new PhotoTask( getIntent().getExtras().getString( "photoRef" ) ).execute();
+        PhotoTask t = new PhotoTask( getIntent().getExtras().getString( "photoRef" ) );
+        t.execute();
+        photoTasks.add(t);
     }
     
     @Override
