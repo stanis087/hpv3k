@@ -5,7 +5,10 @@
 package com.android.projecte.townportal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,6 +23,12 @@ public class PlaceDetail implements Serializable {
 
     public String phoneNumber = null, address = null, website = null, photoRef = null, siteName = null;
     public Bitmap sitePhoto = null;
+    public List<Review> reviews = new ArrayList<Review>();
+    
+    static class Review implements Serializable
+    {
+    	public String author, text;
+    }
     
     // Create PlaceDetail from JSON
     static PlaceDetail jsonToPlaceDetail( JSONObject result ) {
@@ -49,6 +58,20 @@ public class PlaceDetail implements Serializable {
             if ( !result.isNull( "name" ) )
                 placeDetail.siteName = result.getString( "name" );
             
+            JSONArray reviews = result.getJSONArray("reviews");
+            if (reviews != null)
+	            for (int i = 0; i < reviews.length(); ++i)
+	            {
+	            	JSONObject review = reviews.getJSONObject(i);
+
+		            if (review != null)
+		            {
+		            	Review r = new Review();
+		            	r.author = review.getString("author_name");
+		            	r.text = review.getString("text");
+		            	placeDetail.reviews.add(r);
+		            }
+	            }
         }
         
         catch ( JSONException e ) {

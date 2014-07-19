@@ -27,7 +27,7 @@ public class PlaceDetailActivity extends Activity {
 
     private TextView nameTextView, ratingTextView, priceTextView, 
                 addressTextView, phoneNumberTextView, websiteTextView,
-                loadingText;
+                loadingText, reviewsText;
     private ImageView photoImageView;
     
     private GooglePlacesSearch gpSearch;
@@ -57,6 +57,7 @@ public class PlaceDetailActivity extends Activity {
         this.websiteTextView = (TextView) findViewById( R.id.websiteText );
         this.photoImageView = (ImageView) findViewById( R.id.photoImage );
         this.loadingText = (TextView) findViewById( R.id.loading );
+        this.reviewsText = (TextView) findViewById(R.id.reviews);
         
         PlaceDetail detail = (PlaceDetail) getIntent().getExtras().getSerializable("placeDetail");
         
@@ -81,6 +82,18 @@ public class PlaceDetailActivity extends Activity {
         
         if ( website != null )
             this.websiteTextView.setText( Html.fromHtml( "<a href=" + website + ">" + website ) );
+        
+        if (!detail.reviews.isEmpty())
+        {
+        	StringBuilder rbuf = new StringBuilder("\nReviews:\n\n");
+	        for (PlaceDetail.Review r : detail.reviews)
+	        {
+	        	rbuf.append(r.author + "\n");
+	        	rbuf.append(r.text + "\n\n");
+	        }
+	        
+	        this.reviewsText.setText(rbuf);
+        }
         
         PhotoTask t = new PhotoTask( getIntent().getExtras().getString( "photoRef" ) );
         t.execute();
