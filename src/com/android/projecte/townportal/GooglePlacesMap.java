@@ -513,7 +513,7 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
         @Override
         protected PlaceDetail doInBackground( Void... unused ) {
 
-            return gpSearch.findPlaceDetail( this.place.placeReference );
+            return gpSearch.findPlaceDetail( this.place.place_id );
         }
 
         @Override

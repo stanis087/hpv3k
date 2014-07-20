@@ -17,7 +17,7 @@ import android.graphics.Bitmap;
 /*
  * Place Detail
  * Description: Data structure used to store details of a place
- *              in a Place Detail Activity.
+ *              in a Place Detail Activity.              
  */
 public class PlaceDetail implements Serializable {
 

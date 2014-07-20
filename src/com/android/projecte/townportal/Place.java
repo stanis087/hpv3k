@@ -12,10 +12,14 @@ import org.json.JSONObject;
 /*
  * Place
  * Description: Data structure that holds Google Place data.
+ * 
+ * Notes:
+ * Deprecated fields: id & reference - https://developers.google.com/places/documentation/search
+ * 
  */
 public class Place implements Serializable {
 
-    public String id, icon, name, vicinity, placeReference;
+    public String place_id, icon, name, vicinity; // removed id, placeReference. Added place_id
     public Double latitude, longitude, rating;
     public Integer price;
     
@@ -34,8 +38,11 @@ public class Place implements Serializable {
             result.icon = toPlace.getString( "icon" );
             result.name = toPlace.getString( "name" );
             result.vicinity = toPlace.getString( "vicinity" );
-            result.id = toPlace.getString( "id" );
-            result.placeReference = toPlace.getString( "reference" );
+            /*
+             * result.id = toPlace.getString( "id" );
+             * result.placeReference = toPlace.getString( "reference" );
+             */
+            result.place_id = toPlace.getString( "place_id" );
             result.rating = toPlace.has( "rating" ) ? toPlace.getDouble( "rating" ) : 0;
             result.price = toPlace.has( "price_level" ) ? toPlace.getInt( "price_level" ) : 0;
 

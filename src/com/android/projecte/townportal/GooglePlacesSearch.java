@@ -37,7 +37,8 @@ public class GooglePlacesSearch {
                   radius = "16100", // in meters - about 10 miles
                   types,
                   sensor = "false",
-                  APIKey = "AIzaSyBz7p2E8oDDBYJYvL3RM3cFjHCJDkpuqwU",
+                  APIKey = "AIzaSyCs5OLw92cqTGbNjoHwJMqWaJ31fmN55eY", // new key for our group. API key under: creinagel@gmail.com
+                  //APIKey = "AIzaSyBz7p2E8oDDBYJYvL3RM3cFjHCJDkpuqwU",
                   reference = null;
     
     BitmapFactory.Options bmOptions;
@@ -152,13 +153,14 @@ public class GooglePlacesSearch {
     /*
      * Get Place Detail URL
      * Description: Generates URL from a place reference
+     * Updated to reflect deprecated "reference"
      */
-    private String getPlaceDetailUrl( String placeRef ) {
+    private String getPlaceDetailUrl( String place_id ) {
 
         String returnVal = new String();
 
-        returnVal = "https://maps.googleapis.com/maps/api/place/details/json?reference=";
-        returnVal += placeRef + "&sensor=" + this.sensor + "&key=" + this.APIKey;
+        returnVal = "https://maps.googleapis.com/maps/api/place/details/json?placeid=";
+        returnVal += place_id + "&sensor=" + this.sensor + "&key=" + this.APIKey;
 
         return returnVal;
     }
