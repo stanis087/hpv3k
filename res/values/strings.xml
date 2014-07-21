@@ -27,6 +27,8 @@
     <string name="jobsViewMore">http://m.monster.com/JobSearch/Search?jobtitle=&amp;keywords=&amp;where=Panama+City%2C+FL</string>
     <string name="placePhoto">Place Photo</string>
     <string name="locations_prompt">Select Location</string>
+    <string name="get_directions">Get Directions</string>
+    <string name="find_movie_showtimes">Find Movie Showtimes</string>
 
     <string-array name="locations">
         <item>My Location</item>
