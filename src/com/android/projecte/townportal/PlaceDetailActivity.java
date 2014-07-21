@@ -9,12 +9,15 @@ import java.util.Vector;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,7 +26,7 @@ import android.widget.TextView;
  * Description: Used with Place Detail Activity page to display detailed place 
  *              information when user clicks on a place in Map Activity.
  */
-public class PlaceDetailActivity extends Activity {
+public class PlaceDetailActivity extends Activity { 
 
     private TextView nameTextView, ratingTextView, priceTextView, 
                 addressTextView, phoneNumberTextView, websiteTextView,
@@ -33,6 +36,7 @@ public class PlaceDetailActivity extends Activity {
     private GooglePlacesSearch gpSearch;
     private AtomicInteger loadingCounter;
     private List<PhotoTask> photoTasks = new Vector<PhotoTask>();
+    private PlaceDetail detail; // needed for scope resolution
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -60,7 +64,7 @@ public class PlaceDetailActivity extends Activity {
         this.reviewsText = (TextView) findViewById(R.id.reviews);
         
         Place place = (Place) getIntent().getExtras().getSerializable("place");
-        PlaceDetail detail = (PlaceDetail) getIntent().getExtras().getSerializable("placeDetail");
+        detail = (PlaceDetail) getIntent().getExtras().getSerializable("placeDetail");
         
         // Set TextViews
         this.nameTextView.setText(detail.siteName);
@@ -98,6 +102,30 @@ public class PlaceDetailActivity extends Activity {
         PhotoTask t = new PhotoTask(detail.photoRef);
         t.execute();
         photoTasks.add(t);
+        
+        // need to show action button if type is movie_theater
+        if( getIntent().getExtras().getString( "gpSearchType" ).equals("movie_theater") ) {       	
+        	View b = findViewById(R.id.btnAction1);
+        	b.setVisibility(View.VISIBLE);
+        	
+        	// click listener goes here
+
+        }
+        
+        // Get Directions button here
+        Button btnPlayAgain = (Button) findViewById(R.id.btnGetDirections);
+		btnPlayAgain.setOnClickListener(new View.OnClickListener() {
+		    @Override
+		    public void onClick(View v) {
+		    	// launch Google Maps app
+		    	// http://stackoverflow.com/questions/2662531/launching-google-maps-directions-via-an-intent-on-android
+		    	Intent intent = new Intent(android.content.Intent.ACTION_VIEW, 
+		    		Uri.parse("http://maps.google.com/maps?q=" + PlaceDetailActivity.this.detail.address));
+		    	startActivity(intent);
+		    }
+		});
+        
+        
     }
     
     @Override
