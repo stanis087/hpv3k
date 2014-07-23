@@ -19,7 +19,7 @@
 		<Spinner android:id="@+id/spinner1"
 		    android:layout_width="match_parent"
 		    android:layout_height="wrap_content"
-		    android:entries="@array/locations"
+			android:entries="@array/locations"
 		    android:prompt="@string/locations_prompt" />
 		
 		<ListView android:id="@+id/list"
