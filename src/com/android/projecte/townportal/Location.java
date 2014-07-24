@@ -1,24 +1,25 @@
 package com.android.projecte.townportal;
 
+import android.util.Log;
+
 public class Location {
 	private String name;
 	private double lat, lng;
-	private Boolean removable, selected;
+	private Boolean removable = true, selected = false;
 	
 	Location(String name, double lat, double lng) {
+		Log.v("Location.java", "Primary Constructor.");
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
-		this.removable = true;
-		this.selected = false;
 	}
 	
 	Location(String name, double lat, double lng, Boolean removable) {
+		Log.v("Location.java", "Secondary Constructor.");
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
 		this.removable = removable;
-		this.selected = false;
 	}	
 	
 	public String getName() {
@@ -47,6 +48,10 @@ public class Location {
 	
 	public void setUnSelected() {
 		this.selected = false;
+	}
+	
+	public String toString() {
+		return this.name;
 	}
 	
 }
