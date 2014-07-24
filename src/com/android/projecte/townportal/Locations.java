@@ -19,7 +19,10 @@ public class Locations {
 	
 	// constructor
 	Locations (Context context) {
-		locations.add( new Location("Panama City, FL", 30.205971, -85.858862, false) );
+		//locations.add( new Location("Panama City, FL", 30.205971, -85.858862, false) );
+		addLocation("Panama City, FL", false , true);
+		addLocation("Ocala, FL");
+		addLocation("Sebring, FL");
 		this.context = context;
 	}
 	
@@ -76,7 +79,7 @@ public class Locations {
 			
 		}
 
-	}
+	}	
 	
 	public String toString(int i, Boolean dummy) {
 		return locations.get(i).getName();

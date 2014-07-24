@@ -116,6 +116,14 @@ public class MainActivity extends Activity {
             break;
         }
         
+        case R.id.btnLocations:{
+            
+            Intent locationsIntent = new Intent( this, ManageLocationsActivity.class );
+            startActivity( locationsIntent );
+            
+            break;
+        }
+        
         default:
             break;
         }

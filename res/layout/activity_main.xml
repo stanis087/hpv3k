@@ -151,5 +151,77 @@
         </LinearLayout>
         
     </LinearLayout>
+    <LinearLayout android:id="@+id/row3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/row2"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:baselineAligned="false" >
+        
+        <LinearLayout android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
 
+            <ImageButton android:id="@+id/btnLocations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/schools"
+                android:contentDescription="Locations"
+                android:onClick="onClick" />
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Locations"
+                android:textSize="12sp" />
+            
+        </LinearLayout>
+        <LinearLayout android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageButton android:id="@+id/btnMisc1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/employment"
+                android:contentDescription="@string/empl_text"
+                android:onClick="onClick"
+                android:visibility="invisible" />
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empl_text"
+                android:textSize="12sp"
+                android:visibility="invisible" />
+            
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <ImageButton android:id="@+id/btnMisc2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/news"
+                android:contentDescription="@string/news_text"
+                android:onClick="onClick"
+                android:visibility="invisible" />
+
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/news_text"
+                android:textSize="12sp"
+                android:visibility="invisible" />
+            
+        </LinearLayout>
+	</LinearLayout>
 </RelativeLayout>
