@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+// creating custom arrayadapter: http://www.ezzylearning.com/tutorial.aspx?tid=1763429
+
 public class LocationsAdapter extends ArrayAdapter<Location> {
 
 	Context context;
