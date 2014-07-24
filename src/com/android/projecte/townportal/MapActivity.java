@@ -76,7 +76,7 @@ public class MapActivity extends FragmentActivity {
         }
         
         if ( pt4 != null ) {
-            
+             
             args = new Bundle();
             args.putString( "type", pt4.googleName );
             args.putSerializable( "loadingCounter" , loadingCounter );

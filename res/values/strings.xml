@@ -24,6 +24,7 @@
     <string name="newsCourtesy">News courtesy of The News Herald</string>
     <string name="emplCourtesy">Jobs courtesy of Monster</string>
     <string name="newsSource">http://m.newsherald.com/</string>
+    <string name="newsSourceFsu">http://news.fsu.edu/</string>
     <string name="newsViewMore">http://m.newsherald.com</string>
     <string name="topNews">Top%20News</string>
     <string name="jobsRss">http://rss.jobsearch.monster.com/rssquery.ashx?where=Houston%2C+TX</string>
