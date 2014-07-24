@@ -5,8 +5,11 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ManageLocationsActivity extends Activity {
 
@@ -30,7 +33,15 @@ public class ManageLocationsActivity extends Activity {
 	    
 	    // Create ArrayAdapter using the planet list.
 	    listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, planetList);
-	    
+	    mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Toast.makeText(getApplication().getBaseContext(), listAdapter.getItem(position), Toast.LENGTH_LONG).show();
+				
+			}
+		});
 	    // Add more planets. If you passed a String[] instead of a List<String> 
 	    // into the ArrayAdapter constructor, you must not add more items. 
 	    // Otherwise an exception will occur.
