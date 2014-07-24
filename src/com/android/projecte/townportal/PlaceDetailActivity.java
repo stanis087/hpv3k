@@ -109,7 +109,15 @@ public class PlaceDetailActivity extends Activity {
         	b.setVisibility(View.VISIBLE);
         	
         	// click listener goes here
-
+        	b.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					Uri uri = Uri.parse("http://www.fandango.com/dragon+ball+z3a+battle+of+gods_174747/movietimes?location=33870&wssaffid=11836&wssac=123");
+	                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+					
+				}
+			});
         }
         
         // Get Directions button here

@@ -23,9 +23,11 @@ public class MainActivity extends Activity {
     private Vector<PlaceType> vFood = new Vector<PlaceType>(),
                               vEnt = new Vector<PlaceType>(),
                               vShop = new Vector<PlaceType>(),
-                              vSchool = new Vector<PlaceType>();
+                              vSchool = new Vector<PlaceType>(),
+                              vReligion = new Vector<PlaceType>();
+    						
     
-    private String foodTitle, entertainmentTitle, shoppingTitle, schoolsTitle;
+    private String foodTitle, entertainmentTitle, shoppingTitle, schoolsTitle, religionTitle;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -42,6 +44,7 @@ public class MainActivity extends Activity {
         this.entertainmentTitle = getString( R.string.entertainment_text );
         this.shoppingTitle = getString( R.string.shopping_text );
         this.schoolsTitle = getString( R.string.schools_text );
+        this.religionTitle = getString( R.string.religious_text);
 
         // Setup food
         this.vFood.add( new PlaceType( "cafe", "Cafes" ) );
@@ -61,6 +64,11 @@ public class MainActivity extends Activity {
         // Setup Schools
         this.vSchool.add( new PlaceType( "school", "Schools" ) );
         this.vSchool.add( new PlaceType( "university", "Universities" ) );
+        
+        // Setup Religious Places
+        this.vReligion.add(new PlaceType("church", "Churches"));
+        this.vReligion.add(new PlaceType("mosque", "Mosque"));
+        this.vReligion.add(new PlaceType("synagogue", "Synagogue"));
     }
 
     /*
@@ -124,6 +132,10 @@ public class MainActivity extends Activity {
             break;
         }
         
+        case R.id.btnReligion:{
+        	
+        	openPlaceList( this.religionTitle, this.vReligion );
+        }
         default:
             break;
         }

@@ -53,6 +53,7 @@ public class GooglePlacesSearch {
     /*
      * Form Google Search URL
      */
+     
     private String formGoogleSearchURL() {
 
         String returnVal = new String();

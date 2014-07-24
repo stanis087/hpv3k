@@ -30,7 +30,7 @@ final public class NewsActivity extends FeedActivity {
     
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
-        
+         
         super.onCreate( savedInstanceState );
         
         // Get strings
