@@ -38,6 +38,7 @@ public class MapActivity extends FragmentActivity {
         PlaceType pt1 = (PlaceType) intent.getSerializableExtra( "PlaceType1" );
         PlaceType pt2 = (PlaceType) intent.getSerializableExtra( "PlaceType2" );
         PlaceType pt3 = (PlaceType) intent.getSerializableExtra( "PlaceType3" );
+        PlaceType pt4 = (PlaceType) intent.getSerializableExtra( "PlaceType4" );
 
         // Use custom title bar
         requestWindowFeature( Window.FEATURE_CUSTOM_TITLE );
@@ -72,6 +73,14 @@ public class MapActivity extends FragmentActivity {
             args.putString( "type", pt3.googleName );
             args.putSerializable( "loadingCounter" , loadingCounter );
             tabHost.addTab( tabHost.newTabSpec( pt3.displayName ).setIndicator( pt3.displayName ), GooglePlacesMap.class, args );
+        }
+        
+        if ( pt4 != null ) {
+            
+            args = new Bundle();
+            args.putString( "type", pt4.googleName );
+            args.putSerializable( "loadingCounter" , loadingCounter );
+            tabHost.addTab( tabHost.newTabSpec( pt4.displayName ).setIndicator( pt4.displayName ), GooglePlacesMap.class, args );
         }
 
         tabHost.setCurrentTab( 0 );

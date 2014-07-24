@@ -16,6 +16,8 @@
     <string name="schools_text">Schools</string>
     <string name="news_text">News</string>
     <string name="religious_text">Religious</string>
+    <string name="medical_text">Medical</string>
+    <string name="lodge_text">Lodging</string>
     <string name="empl_text">Employment</string>
     <string name="loading_text">Loading&#8230;</string>
     <string name="returnText">Press Back to Return</string>

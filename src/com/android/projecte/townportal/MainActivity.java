@@ -24,10 +24,13 @@ public class MainActivity extends Activity {
                               vEnt = new Vector<PlaceType>(),
                               vShop = new Vector<PlaceType>(),
                               vSchool = new Vector<PlaceType>(),
-                              vReligion = new Vector<PlaceType>();
+                              vReligion = new Vector<PlaceType>(),
+                              vMedical = new Vector<PlaceType>(),
+                              vLodging = new Vector<PlaceType>();
     						
     
-    private String foodTitle, entertainmentTitle, shoppingTitle, schoolsTitle, religionTitle;
+    private String foodTitle, entertainmentTitle, shoppingTitle, schoolsTitle, religionTitle,
+    				medicalTitle, lodgingTitle;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
@@ -45,6 +48,8 @@ public class MainActivity extends Activity {
         this.shoppingTitle = getString( R.string.shopping_text );
         this.schoolsTitle = getString( R.string.schools_text );
         this.religionTitle = getString( R.string.religious_text);
+        this.medicalTitle = getString( R.string.medical_text);
+        this.lodgingTitle = getString( R.string.lodge_text );
 
         // Setup food
         this.vFood.add( new PlaceType( "cafe", "Cafes" ) );
@@ -65,10 +70,21 @@ public class MainActivity extends Activity {
         this.vSchool.add( new PlaceType( "school", "Schools" ) );
         this.vSchool.add( new PlaceType( "university", "Universities" ) );
         
+        // Setup Medical 
+        this.vMedical.add(new PlaceType("hospital", "Hospitals"));
+        this.vMedical.add(new PlaceType("pediatrician", "Pediatricians"));
+        this.vMedical.add(new PlaceType("dentist", "Dental"));
+        this.vMedical.add(new PlaceType("orthodontist", "Orthodontists"));
+        
         // Setup Religious Places
         this.vReligion.add(new PlaceType("church", "Churches"));
         this.vReligion.add(new PlaceType("mosque", "Mosque"));
         this.vReligion.add(new PlaceType("synagogue", "Synagogue"));
+        
+        // Setup Lodging Places
+        this.vLodging.add( new PlaceType("lodging", "Lodging"));
+        
+        
     }
 
     /*
@@ -135,6 +151,14 @@ public class MainActivity extends Activity {
         case R.id.btnReligion:{
         	
         	openPlaceList( this.religionTitle, this.vReligion );
+        }
+        
+        case R.id.btnMedical:{
+        	openPlaceList( this.medicalTitle, this.vMedical	);
+        }
+        
+        case R.id.btnLodging:{
+        	openPlaceList( this.lodgingTitle, this.vLodging );
         }
         default:
             break;
