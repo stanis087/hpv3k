@@ -20,7 +20,8 @@ public class ManageLocationsActivity extends Activity {
 
 	private ListView mainListView;
 	private Vector<Location> locations = new Vector<Location>();
-
+	private LocationsAdapter listAdapter;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -37,32 +38,40 @@ public class ManageLocationsActivity extends Activity {
 		// Find the ListView resource.
 		mainListView = (ListView) findViewById(R.id.mainListView);
 
-		/*
-		 * // Create and populate a List of planet names. String[] planets = new
-		 * String[] { "Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn",
-		 * "Uranus", "Neptune" }; ArrayList<String> planetList = new
-		 * ArrayList<String>(); planetList.addAll(Arrays.asList(planets));
-		 */
-
-		// Create ArrayAdapter using the planet list.
-		LocationsAdapter listAdapter = new LocationsAdapter(this,
+		// Create ArrayAdapter
+		listAdapter = new LocationsAdapter(this,
 				R.layout.simplerow, locations);
 
 		// Create OnItemClickListener
-		mainListView
-				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
-						Toast.makeText(getApplication().getBaseContext(),
-								"Clicked" /*
-										 * listAdapter.getItem(position).toString
-										 * ()
-										 */, Toast.LENGTH_LONG).show();
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				
+				final int InternalPosition = position;
+				// remove items here
+				// http://www.mkyong.com/android/android-alert-dialog-example/
+				
+				new AlertDialog.Builder(view.getContext())
 
-					}
-				});
+				.setTitle("Remove Location")
+				.setMessage("Are you sure.")
+				.setPositiveButton("Yes",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								removeLocation(InternalPosition);
+																
+							}
+						})
+				.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								// do nothing
+							}
+						}).show();
+
+			};
+		});
 
 		Log.v("ManageLocationsActivity", "After setOnItemClickListener.");
 
@@ -72,39 +81,52 @@ public class ManageLocationsActivity extends Activity {
 		// Set the ArrayAdapter as the ListView's adapter.
 		mainListView.setAdapter(listAdapter);
 
+		// http://stackoverflow.com/questions/12422352/delete-item-by-clicking-any-item-in-listview
+
 		Button button = (Button) findViewById(R.id.btnAdd);
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// Perform action on click
 
-				final EditText txtUrl = new EditText(v.getContext());
+				// http://twigstechtips.blogspot.com/2011/10/android-allow-user-to-editinput-text.html
+				final EditText input = new EditText(v.getContext());
 
-				// Set the default text to a link of the Queen
-
-				txtUrl.setHint("http://www.librarising.com/astrology/celebs/images2/QR/queenelizabethii.jpg");
+				input.setHint("Panama City, FL");
 
 				new AlertDialog.Builder(v.getContext())
 
 						.setTitle("New Location")
-						.setMessage("Enter your new location in the \"City, State\" format.")
-						.setView(txtUrl)
+						.setMessage(
+								"Enter your new location in the \"City, State\" format.")
+						.setView(input)
 						.setPositiveButton("Add",
 								new DialogInterface.OnClickListener() {
 									public void onClick(DialogInterface dialog, int whichButton) {
-										String url = txtUrl.getText().toString();
-										// do add location thing here
+										addLocation( input.getText().toString() );
 									}
 								})
 						.setNegativeButton("Cancel",
 								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int whichButton) {
+									public void onClick(DialogInterface dialog, int whichButton) {
 									}
 								}).show();
 
 			}
 		});
 
+	}
+
+	// invoke methods to store in Locations and to add to ListView
+	private void addLocation(String location) {
+		locations.add( new Location(location, 0, 0) );
+		Toast.makeText(getApplicationContext(), location + " added.", Toast.LENGTH_LONG).show();
+		listAdapter.notifyDataSetChanged();
+	}
+	
+	private void removeLocation(int position){
+		
+		locations.remove( position );
+		listAdapter.notifyDataSetChanged();
 	}
 
 }

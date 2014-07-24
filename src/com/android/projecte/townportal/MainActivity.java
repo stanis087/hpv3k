@@ -9,8 +9,11 @@ import java.util.Vector;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 /*
  * Main Activity
@@ -140,13 +143,13 @@ public class MainActivity extends Activity {
             break;
         }
         
-        case R.id.btnLocations:{
+        /*case R.id.btnLocations:{
             
             Intent locationsIntent = new Intent( this, ManageLocationsActivity.class );
             startActivity( locationsIntent );
             
             break;
-        }
+        }*/
         
         case R.id.btnReligion:{
         	
@@ -179,4 +182,27 @@ public class MainActivity extends Activity {
         
         startActivity( intent );
     }
+    
+    public boolean onCreateOptionsMenu(Menu menu) {  
+        // Inflate the menu; this adds items to the action bar if it is present.  
+        getMenuInflater().inflate(R.menu.menu_main, menu);//Menu Resource, Menu  
+        return true;  
+    }  
+      
+    @Override  
+    public boolean onOptionsItemSelected(MenuItem item) {  
+        switch (item.getItemId()) {  
+            case R.id.menu_locations:  
+              Toast.makeText(getApplicationContext(),"Managing Locations",Toast.LENGTH_LONG).show();
+              Intent locationsIntent = new Intent( this, ManageLocationsActivity.class );
+              startActivity( locationsIntent );
+              return true;
+              
+            case R.id.menu_exit:  
+            	MainActivity.this.finish();
+                return true;     
+            default:  
+              return super.onOptionsItemSelected(item);  
+        }  
+    } 
 }
