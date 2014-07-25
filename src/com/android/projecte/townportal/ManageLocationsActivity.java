@@ -5,9 +5,7 @@ import java.util.Vector;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,13 +25,24 @@ public class ManageLocationsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manage_locations);
+		
+		//Log.v("ManageLocationsActivity", "Before loading locations.");
+		
+		Locations locations3 = new Locations( getApplicationContext() );
+		//Locations locations2 = Locations.loadPreferences( getApplicationContext() );
+		
 
-		Log.v("ManageLocationsActivity", "Before adding locations.");
+		//Log.v("ManageLocationsActivity", "After loading locations.");
+		
+		locations3.addLocation(getApplicationContext(), "New York, NY");
+
+		Log.v("Locations dump: ", locations3.toString() );
+		
 
 		locations.add(new Location("Panama City, FL", 30.205971, -85.858862));
 		locations.add(new Location("Ocala, FL", 29.173885, -82.156807));
 
-		Log.v("ManageLocationsActivity", "After adding locations.");
+		
 
 		// Find the ListView resource.
 		mainListView = (ListView) findViewById(R.id.mainListView);

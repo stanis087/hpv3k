@@ -3,22 +3,33 @@ package com.android.projecte.townportal;
 import android.util.Log;
 
 public class Location {
-	private String name;
+	private String name, city, state;
 	private double lat, lng;
 	private Boolean removable = true, selected = false;
-	
+	int zip;
+
 	Location(String name, double lat, double lng) {
-		Log.v("Location.java", "Primary Constructor.");
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
 	}
 	
-	Location(String name, double lat, double lng, Boolean removable) {
-		Log.v("Location.java", "Secondary Constructor.");
+	Location(String name, double lat, double lng, String city, String state, int zip) {
 		this.name = name;
 		this.lat = lat;
 		this.lng = lng;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
+	}
+	
+	Location(String name, double lat, double lng, String city, String state, int zip, Boolean removable) {
+		this.name = name;
+		this.lat = lat;
+		this.lng = lng;
+		this.city = city;
+		this.state = state;
+		this.zip = zip;
 		this.removable = removable;
 	}	
 	
