@@ -17,7 +17,7 @@ import android.widget.Toast;
 public class ManageLocationsActivity extends Activity {
 
 	private ListView mainListView;
-	private Vector<Location> locations = new Vector<Location>();
+	private Locations locations;
 	private LocationsAdapter listAdapter;
 	
 	/** Called when the activity is first created. */
@@ -26,30 +26,15 @@ public class ManageLocationsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_manage_locations);
 		
-		//Log.v("ManageLocationsActivity", "Before loading locations.");
+		locations = Locations.loadPreferences(this);
 		
-		Locations locations3 = new Locations( getApplicationContext() );
-		//Locations locations2 = Locations.loadPreferences( getApplicationContext() );
+		Log.v("LocationsActivity", "size: " + Integer.toString(locations.getSize()) );
 		
-
-		//Log.v("ManageLocationsActivity", "After loading locations.");
-		
-		locations3.addLocation(getApplicationContext(), "New York, NY");
-
-		Log.v("Locations dump: ", locations3.toString() );
-		
-
-		locations.add(new Location("Panama City, FL", 30.205971, -85.858862));
-		locations.add(new Location("Ocala, FL", 29.173885, -82.156807));
-
-		
-
 		// Find the ListView resource.
 		mainListView = (ListView) findViewById(R.id.mainListView);
 
 		// Create ArrayAdapter
-		listAdapter = new LocationsAdapter(this,
-				R.layout.simplerow, locations);
+		listAdapter = new LocationsAdapter(this, R.layout.simplerow, locations.getLocations() );
 
 		// Create OnItemClickListener
 		mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,20 +67,16 @@ public class ManageLocationsActivity extends Activity {
 			};
 		});
 
-		Log.v("ManageLocationsActivity", "After setOnItemClickListener.");
-
-		// listAdapter.add( new Location("Gainesville, FL", 29.686270,
-		// -82.31974) );
-
 		// Set the ArrayAdapter as the ListView's adapter.
 		mainListView.setAdapter(listAdapter);
 
 		// http://stackoverflow.com/questions/12422352/delete-item-by-clicking-any-item-in-listview
-
 		Button button = (Button) findViewById(R.id.btnAdd);
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				// Perform action on click
+				
+				listAdapter.notifyDataSetChanged();
 
 				// http://twigstechtips.blogspot.com/2011/10/android-allow-user-to-editinput-text.html
 				final EditText input = new EditText(v.getContext());
@@ -122,20 +103,27 @@ public class ManageLocationsActivity extends Activity {
 
 			}
 		});
-
+		
 	}
 
 	// invoke methods to store in Locations and to add to ListView
 	private void addLocation(String location) {
-		locations.add( new Location(location, 0, 0) );
+		locations.addLocation(location);
 		Toast.makeText(getApplicationContext(), location + " added.", Toast.LENGTH_LONG).show();
 		listAdapter.notifyDataSetChanged();
+		//Log.v("Locations.addLocation: ", "Added: " + location + " - new size: " + Integer.toString(locations.getSize()) );
 	}
 	
 	private void removeLocation(int position){
 		
-		locations.remove( position );
+		locations.removeLocation( position );
 		listAdapter.notifyDataSetChanged();
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		Locations.savePreferences(this, locations);
 	}
 
 }
