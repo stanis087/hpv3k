@@ -48,13 +48,18 @@ public class ManageLocationsActivity extends Activity {
 				
 				new AlertDialog.Builder(view.getContext())
 
-				.setTitle("Remove Location")
-				.setMessage("Are you sure.")
-				.setPositiveButton("Yes",
+				.setTitle("Edit Location")
+				.setMessage("Delete location or set as default.")
+				.setPositiveButton("Delete",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton) {
-								removeLocation(InternalPosition);
-																
+								removeLocation(InternalPosition);																
+							}
+						})
+				.setNeutralButton("Set Default",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int whichButton) {
+								locations.setSelected(InternalPosition);																
 							}
 						})
 				.setNegativeButton("Cancel",
@@ -111,12 +116,19 @@ public class ManageLocationsActivity extends Activity {
 		locations.addLocation(location);
 		Toast.makeText(getApplicationContext(), location + " added.", Toast.LENGTH_LONG).show();
 		listAdapter.notifyDataSetChanged();
-		//Log.v("Locations.addLocation: ", "Added: " + location + " - new size: " + Integer.toString(locations.getSize()) );
+		Log.v("Locations.addLocation: ", "Added: " + location + " - new size: " + Integer.toString(locations.getSize()) );
 	}
 	
 	private void removeLocation(int position){
 		
-		locations.removeLocation( position );
+		
+		if(locations.removeLocation( position ))
+			Toast.makeText(getApplicationContext(), "Location removed.", Toast.LENGTH_LONG).show();
+		else
+			Toast.makeText(getApplicationContext(), "Location was not removed.", Toast.LENGTH_LONG).show();
+		
+		
+		
 		listAdapter.notifyDataSetChanged();
 	}
 	

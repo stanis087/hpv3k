@@ -22,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,8 +47,6 @@ import android.widget.Toast;
  */
 public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelectedListener {
 
-    // Panama City Beach Coordinates
-    final private double panamaLat = 30.205971, panamaLong = -85.858862;
     final private int defaultRadius = 5997, defaultZoom = 13;
     final private String defaultMapType = "roadmap";
     
@@ -68,10 +67,19 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
     private List<ListViewTask> listViewTasks = new Vector<ListViewTask>();
     private List<DetailTask> detailTasks = new Vector<DetailTask>(); 
     private AtomicInteger loadingCounter;
+    private com.android.projecte.townportal.Locations locations;
+    
+    
     
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    	
+    	Log.v("GooglePlacesMap.onCreateView", "Starting");
         
+    	this.locations = com.android.projecte.townportal.Locations.loadPreferences( getActivity().getApplicationContext() );
+    	
+    	Log.v("GooglePlacesMap.onCreateView", "Current default: " + Integer.toString(locations.getSelected()) );
+    	
         View view = inflater.inflate( R.layout.activity_map, container, false );
 
         // Get views
@@ -79,6 +87,11 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
         this.mapView = (WebView) view.findViewById( R.id.mapview );
         this.placesList = (ListView) view.findViewById( R.id.list );
         this.loadingText = (TextView) getActivity().findViewById( R.id.loading );
+        
+        // load correct stuff for spinner
+        LocationsAdapter spinnerArrayAdapter = new LocationsAdapter(getActivity().getApplicationContext(), R.layout.spinner, locations.getLocations() );
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_items); // The drop down view
+        spinner.setAdapter(spinnerArrayAdapter);       
         
         this.spinner.setOnItemSelectedListener( this );
         
@@ -162,6 +175,11 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
         
         super.onActivityCreated(savedInstanceState );
         
+        Log.v("GooglePlacesMap.onActivityCreated", "Starting");
+        
+        Log.v("GooglePlacesMap.onActivityCreated", "Entered Method");
+        
+        // returning from detail activity
         if ( savedInstanceState != null ) {
             
             this.init();
@@ -175,9 +193,12 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
             gpSearch = new GooglePlacesSearch( type, this.currentCoords, this.currentRadius );
             new ListViewTask( savedInstanceState.getInt( "firstVisiblePosition" ) ).execute();
             
+            Log.v("GooglePlacesMap.onActivityCreated", "savedInstanceState != null" );
+            
             this.mapView.loadData( getMapHTML(), "text/html", "UTF-8" );
                     
         } else {
+        	// starting Map activity fresh from Main Activity
             
             if ( this.alreadyStarted ) {
                 
@@ -185,18 +206,21 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
                 
                 new ListViewTask( this.savedFirstVisiblePosition ).execute();
                 
+                Log.v("GooglePlacesMap.onActivityCreated", "this.alreadyStarted" );
                 this.mapView.loadData( getMapHTML(), "text/html", "UTF-8" );
                 
             } else {
                 
                 this.init();
                 
-                this.currentCoords = this.getGoogleCoordinates( this.panamaLat, this.panamaLong );
+                this.currentCoords = this.getGoogleCoordinates( locations.getLocation(locations.getSelected()).getLat(), locations.getLocation(locations.getSelected()).getLng() );
                 this.currentRadius = this.defaultRadius;
                 this.currentZoom = this.defaultZoom;
                 this.currentMapType = this.defaultMapType;
                 
-                newLocationSelected( this.spinner.getItemAtPosition( this.currentSpinnerIndex ).toString() );
+                Log.v("GooglePlacesMap.onActivityCreated", "Not started yet" +Integer.toString( this.spinner.getSelectedItemPosition() ));
+                
+                newLocationSelected( this.spinner.getSelectedItemPosition() );
             }
         }
     }
@@ -227,6 +251,8 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
      */
     private void init() {
     	
+    	Log.v("GooglePlacesMap.init()", "Init called" );
+    	
         this.alreadyStarted = true;
         
         Bundle arguments = this.getArguments();
@@ -235,52 +261,14 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
         
         this.context = this.getActivity();
         
-        this.currentSpinnerIndex = 0;
+        Log.v("GooglePlacesMap.init()", Integer.toString(locations.getSelected()) );
+        
+        this.spinner.setSelection( locations.getSelected() );
         
         // Acquire a reference to the system Location Manager
-        this.locationManager = (LocationManager) this.context.getSystemService( Context.LOCATION_SERVICE );
         
-        if ( this.locationManager == null ) {
-                
-            Toast toast = Toast.makeText( context, "error: Failed to use the Location Service.", Toast.LENGTH_SHORT );
-            toast.setGravity( Gravity.CENTER_HORIZONTAL, 0, 0 );
-            toast.show();
-            this.spinner.setSelection( 1 );
-            this.currentSpinnerIndex = 1;
-            
-        } else {
-                
-            // Find best provider for searching locations
-            this.bestProvider = this.locationManager.getBestProvider( new Criteria(), true );
-            
-            if ( this.bestProvider == null ) {
+        this.currentSpinnerIndex = locations.getSelected();
 
-                Toast toast = Toast.makeText( context, "error: Please enable Location Services.", Toast.LENGTH_SHORT );
-                toast.setGravity( Gravity.CENTER_HORIZONTAL, 0, 0 );
-                toast.show();
-                this.spinner.setSelection( 1 );
-                this.currentSpinnerIndex = 1;
-                
-            } else {
-                
-                // Ask for updates every once in a while but we don't actually care when we get them
-                this.locationManager.requestLocationUpdates( this.bestProvider, 6000, 20,  new LocationListener() {
-
-                    @Override
-                    public void onLocationChanged(Location location) {}
-
-                    @Override
-                    public void onProviderDisabled(String provider) {}
-
-                    @Override
-                    public void onProviderEnabled(String provider) {}
-
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {}
-                        
-                });
-            }
-        }
     }
     
     /*
@@ -559,10 +547,17 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
      * New Location Selected
      * Description: Loads Map and ListView based off selected location.
      */
-    private void newLocationSelected( String location ) {
+    private void newLocationSelected( int position ) {
         
+    	Log.v("GooglePlacesMap.newLocationSelected()", "Selected Location: " + locations.getLocation(position).getName() );
+    	Log.v("GooglePlacesMap.newLocationSelected()", "Selected Position: " + Integer.toString( position ) );
+    	
+    	// load lat/lng from locations/load last known lat/lng for My Location
+    	Double lat = locations.getLocation(position).getLat();
+    	Double lng = locations.getLocation(position).getLng();
+    	
         // "My Location" is one of the string items of the drop-down selector
-        if ( location.equals( "My Location" ) ) {
+        if ( position == 0 ) {
 
             // update latitude and longitude coordinates for each
             if ( this.bestProvider != null ) {
@@ -570,42 +565,35 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
                 this.locationDetails = locationManager.getLastKnownLocation( bestProvider );
 
                 if ( this.locationDetails != null ) {
-
-                    this.currentCoords = this.getGoogleCoordinates( this.locationDetails.getLatitude(), this.locationDetails.getLongitude() );
-
-                    // Update GP Search Parameters
-                    this.gpSearch = new GooglePlacesSearch( this.type, this.currentCoords, this.defaultRadius );
-                    new ListViewTask().execute();
-                        
-                    this.mapView.stopLoading();
-                    this.mapView.loadData( getMapHTML(), "text/html", "UTF-8" );
-
+                	
+                	lat = this.locationDetails.getLatitude();
+                	lng = this.locationDetails.getLongitude();
+                	
+                    // update my location lat/lng
+                	locations.updateMyLocation(lat, lng);
+                	Toast.makeText( this.context, "Updated current location.", Toast.LENGTH_SHORT ).show();
                 } else {
 
-                    // Default to Panama City
-                    this.spinner.setSelection( 1 );
-                    this.currentSpinnerIndex = 1;
-                    location = this.spinner.getItemAtPosition( this.currentSpinnerIndex ).toString();
-                    Toast toast = Toast.makeText( this.context, "Failed to get current location. Defaulting to Panama City. Try again soon.",
-                                    Toast.LENGTH_SHORT );
-                    
-                    toast.setGravity( Gravity.CENTER_HORIZONTAL, 0, 0 );
-                    toast.show();
+                    // Use last known coordinates for My Location
+                    Toast.makeText( this.context, "Failed to get current location. Using last known location.", Toast.LENGTH_SHORT ).show();
                 }
             }
         }
 
-        if ( location.equals( "Panama City" ) ) {
+        Log.v("GooglePlacesMap.newLocationSelected()", "Coordinates: " + Double.toString(lat) + "/." + Double.toString(lng) );
+        
+    	// need to update the selected item to use as the default
+        locations.setSelected(position);
+        
+        this.currentCoords = this.getGoogleCoordinates( lat, lng );
+        
+        // Update GP Search Parameters
+        this.gpSearch = new GooglePlacesSearch( type, this.currentCoords, this.defaultRadius );
+        new ListViewTask().execute();
 
-            this.currentCoords = this.getGoogleCoordinates( this.panamaLat, this.panamaLong );
-    
-            // Update GP Search Parameters
-            this.gpSearch = new GooglePlacesSearch( type, this.currentCoords, this.defaultRadius );
-            new ListViewTask().execute();
+        this.mapView.stopLoading();
+        this.mapView.loadData( getMapHTML(), "text/html", "UTF-8" );
 
-            this.mapView.stopLoading();
-            this.mapView.loadData( getMapHTML(), "text/html", "UTF-8" );
-        }
     }
     
     @Override
@@ -622,9 +610,19 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
         else
             this.currentSpinnerIndex = this.spinner.getSelectedItemPosition();
         
-        this.newLocationSelected( this.spinner.getSelectedItem().toString() );
+        //Log.v("GooglePlacesMap.onItemSelected", Integer.toString( this.spinner.getSelectedItemPosition() ));
+        
+        // run for all except first clicks when arriving to activity
+        this.newLocationSelected( this.spinner.getSelectedItemPosition() );
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {}
+    
+	@Override
+	public void onStop() {
+		super.onStop();
+		Log.v("GooglePlacesMap.onStop", "Stopping");
+		com.android.projecte.townportal.Locations.savePreferences(getActivity().getApplicationContext(), locations);
+	}
 }

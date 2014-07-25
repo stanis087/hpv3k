@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -16,10 +16,16 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    
+
     <!-- Styles for Custom Title Bar -->
-	<style name="WindowTitleBackground" parent="AppBaseTheme">   
-        <item name="android:background">@android:color/transparent</item>              
+    <style name="WindowTitleBackground" parent="AppBaseTheme">
+        <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="spinnerItemsStyle" parent="android:Widget.TextView.SpinnerItem">
+
+    </style>
+
+    <style name="spinnerDropDown" parent="android:TextAppearance.Widget.TextView.SpinnerItem"></style>
 
 </resources>

@@ -1,5 +1,7 @@
 package com.android.projecte.townportal;
 
+import android.util.Log;
+
 public class Location {
 	private String name, city, state;
 	private double lat, lng;
@@ -61,6 +63,12 @@ public class Location {
 		return selected;
 	}
 
+	public void updateCoordinates(double lat, double lng) {
+		this.lat = lat;
+		this.lng = lng;
+		Log.v("Locations.updateMyLocation", "Location updated: " + Double.toString(lat) + "/" + Double.toString(lng));
+	}
+	
 	public void setSelected() {
 		this.selected = true;
 	}

@@ -3,5 +3,8 @@
     
     <color name="gray">#D6D6D6</color>
     <color name="darkBlue">#FF0075FF</color>
+    <color name="spinnerBG">#CCCCCC</color>
+    <color name="spinnerColor">#000000</color>
+    <color name="spinnerColorSelected">#000000</color>
         
 </resources>

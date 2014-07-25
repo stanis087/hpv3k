@@ -24,13 +24,19 @@ public class Locations {
 
 	// constructor
 	Locations() {
+		
+		Log.v("Locations.java", "Constructor invoked.");
+		
+		// need to add my location
+		locations.add(new Location("My Location", 0, 0,
+				"city", "st", 1, false));
 		locations.add(new Location("Panama City, FL", 30.205971, -85.858862,
 				"Panama City", "FL", 1, false));
-		addLocation("Ocala, FL");
+		/*addLocation("Ocala, FL");
 		addLocation("Sebring, FL");
 		addLocation("Miami, FL");
 		addLocation("Lexington, KY");
-		addLocation("San Fransisco, CA");
+		addLocation("San Fransisco, CA");*/
 
 		// still need to add "my location"
 
@@ -55,9 +61,6 @@ public class Locations {
 	public String toString() {
 		String str = "";
 
-		Log.v("Locations.toString()", "begin dump");
-		Log.v("Locations.getSize()", String.valueOf(getSize()));
-
 		for (int i = 0; i < locations.size(); i++) {
 			str = str + locations.get(i).getName();
 		}
@@ -71,18 +74,26 @@ public class Locations {
 
 	// remove location
 	// if location is removable, then remove
-	public void removeLocation(String name) {
+	public Boolean removeLocation(String name) {
 
 		int position = findLocation(name);
 
-		if (position != -1)
+		if (position != -1 && locations.get(position).isRemovable()  ) {
 			locations.remove(position);
+			return true;
+		}
 
+		return false;
 	}
 
-	public void removeLocation(int position) {
+	public Boolean removeLocation(int position) {
 
-		locations.remove(position);
+		if ( locations.get(position).isRemovable() ) {
+			locations.remove(position);
+			return true;
+		}
+		
+		return false;
 	}
 
 	public int findLocation(String name) {
@@ -126,7 +137,30 @@ public class Locations {
 				locations.get(i).setUnSelected();
 		}
 	}
+	
+	public void setSelected(int j) {
+		for (int i = 0; i < locations.size(); i++)
+			locations.get(i).setUnSelected();
+		
+		locations.get(j).setSelected();
+	}
+	
+	public int getSelected() {
+		for (int i = 0; i < locations.size(); i++) {
+			if (locations.get(i).isSelected()) {
+				Log.v("Locations.getSelected()", "Selected: " + Integer.toString(i));
+				return i;
+			}
+		}
+		return 0; // default to first
+	}
 
+	public void updateMyLocation(double lat, double lng) {
+		if( locations.get(0).getName().equals("My Location") )
+			updateMyLocation(lat, lng);
+		
+	}
+	
 	// http://stackoverflow.com/questions/5418160/store-and-retrieve-a-class-object-in-shared-preference
 	public static void savePreferences(Context context, Locations locations) {
 		SharedPreferences mPrefs = context.getSharedPreferences(
@@ -161,9 +195,9 @@ public class Locations {
 		} else
 			Log.v("Locations loadPref", "not null");
 
-		Log.v("Locations loadPref dump1: ", json);
+		//Log.v("Locations loadPref dump1: ", json);
 		json = mPrefs.getString("userLocationsList", "notFound");
-		Log.v("Locations loadPref dump2: ", json);
+		//Log.v("Locations loadPref dump2: ", json);
 
 		return gson.fromJson(json, Locations.class);
 	}
