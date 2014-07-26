@@ -264,10 +264,64 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
         Log.v("GooglePlacesMap.init()", Integer.toString(locations.getSelected()) );
         
         this.spinner.setSelection( locations.getSelected() );
+        this.currentSpinnerIndex = locations.getSelected();
         
         // Acquire a reference to the system Location Manager
+        this.locationManager = (LocationManager) this.context.getSystemService( Context.LOCATION_SERVICE );
         
-        this.currentSpinnerIndex = locations.getSelected();
+        if ( this.locationManager == null ) {
+                
+            Toast toast = Toast.makeText( context, "error: Failed to use the Location Service.", Toast.LENGTH_SHORT );
+            toast.setGravity( Gravity.CENTER_HORIZONTAL, 0, 0 );
+            toast.show();
+            
+            // Set Panama City as selected if My Location in selected, but unable to obtain
+            // and if we don't have an existing location saved already.
+            if( locations.getSelected() == 0 && locations.getLocation( 0 ).getLat() == 0 ){
+	            
+	            this.spinner.setSelection( 1 );
+	            this.currentSpinnerIndex = 1;
+            }
+            
+        } else {
+                
+            // Find best provider for searching locations
+            this.bestProvider = this.locationManager.getBestProvider( new Criteria(), true );
+            
+            if ( this.bestProvider == null ) {
+
+                Toast toast = Toast.makeText( context, "error: Please enable Location Services.", Toast.LENGTH_SHORT );
+                toast.setGravity( Gravity.CENTER_HORIZONTAL, 0, 0 );
+                toast.show();
+                
+                // Set Panama City as selected if My Location in selected, but unable to obtain
+                // and if we don't have an existing location saved already.
+                if( locations.getSelected() == 0 && locations.getLocation( 0 ).getLat() == 0 ){
+    	            
+    	            this.spinner.setSelection( 1 );
+    	            this.currentSpinnerIndex = 1;
+                }
+                
+            } else {
+                
+                // Ask for updates every once in a while but we don't actually care when we get them
+                this.locationManager.requestLocationUpdates( this.bestProvider, 6000, 20,  new LocationListener() {
+
+                    @Override
+                    public void onLocationChanged(Location location) {}
+
+                    @Override
+                    public void onProviderDisabled(String provider) {}
+
+                    @Override
+                    public void onProviderEnabled(String provider) {}
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {}
+                        
+                });
+            }
+        }
 
     }
     
@@ -549,12 +603,8 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
      */
     private void newLocationSelected( int position ) {
         
-    	Log.v("GooglePlacesMap.newLocationSelected()", "Selected Location: " + locations.getLocation(position).getName() );
-    	Log.v("GooglePlacesMap.newLocationSelected()", "Selected Position: " + Integer.toString( position ) );
-    	
-    	// load lat/lng from locations/load last known lat/lng for My Location
-    	Double lat = locations.getLocation(position).getLat();
-    	Double lng = locations.getLocation(position).getLng();
+    	/*Log.v("GooglePlacesMap.newLocationSelected()", "Selected Location: " + locations.getLocation(position).getName() );
+    	Log.v("GooglePlacesMap.newLocationSelected()", "Selected Position: " + Integer.toString( position ) );*/
     	
         // "My Location" is one of the string items of the drop-down selector
         if ( position == 0 ) {
@@ -566,26 +616,47 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
 
                 if ( this.locationDetails != null ) {
                 	
-                	lat = this.locationDetails.getLatitude();
-                	lng = this.locationDetails.getLongitude();
+                	Log.v("GooglePlacesMap.newLocationSelected()", "Fetched Coordinates: " + Double.toString(this.locationDetails.getLatitude()) + "/." + Double.toString(this.locationDetails.getLongitude()) );
                 	
                     // update my location lat/lng
-                	locations.updateMyLocation(lat, lng);
+                	locations.updateMyLocation(this.locationDetails.getLatitude(), this.locationDetails.getLongitude());
                 	Toast.makeText( this.context, "Updated current location.", Toast.LENGTH_SHORT ).show();
                 } else {
 
                     // Use last known coordinates for My Location
-                    Toast.makeText( this.context, "Failed to get current location. Using last known location.", Toast.LENGTH_SHORT ).show();
+                	if( locations.getLocation(0).getLat() != 0 ) {
+                		
+	                    Toast.makeText( this.context, "Location error. Using last known location.", Toast.LENGTH_SHORT ).show();
+                	}
+                	
+                	// No previous location coords saved. Should only exist once until the first time it is saved to prefs successfully
+                	else {
+                		// switch back to PC
+                		this.spinner.setSelection( 1 );
+	                    this.currentSpinnerIndex = 1;
+	                    position = 1; // switch to PC
+	                    Toast.makeText( this.context, "Info unavailable for your location.", Toast.LENGTH_SHORT ).show();
+                	}
                 }
             }
-        }
 
-        Log.v("GooglePlacesMap.newLocationSelected()", "Coordinates: " + Double.toString(lat) + "/." + Double.toString(lng) );
+        }
         
-    	// need to update the selected item to use as the default
+        
+        // need to update the selected item to use as the default
         locations.setSelected(position);
-        
-        this.currentCoords = this.getGoogleCoordinates( lat, lng );
+        /*
+        Double lat = locations.getLocation(position).getLat();
+        Double lng = locations.getLocation(position).getLng();
+        */
+        // locations.getLocation(position).getLat()
+
+        //Log.v("GooglePlacesMap.newLocationSelected()", "Coordinates: " + Double.toString(lat) + "/." + Double.toString(lng) );
+
+        this.currentCoords = this.getGoogleCoordinates( 
+        		locations.getLocation(position).getLat(), 
+        		locations.getLocation(position).getLng() );
+
         
         // Update GP Search Parameters
         this.gpSearch = new GooglePlacesSearch( type, this.currentCoords, this.defaultRadius );

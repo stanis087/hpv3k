@@ -156,9 +156,11 @@ public class Locations {
 	}
 
 	public void updateMyLocation(double lat, double lng) {
-		if( locations.get(0).getName().equals("My Location") )
-			updateMyLocation(lat, lng);
 		
+		//Log.v("Locations.updateMyLocation()", "Updating my location :" + Double.toString(lat) + "/." + Double.toString(lng)); 
+		
+		if( locations.get(0).getName().equals("My Location") )
+			locations.get(0).updateCoordinates(lat, lng);
 	}
 	
 	// http://stackoverflow.com/questions/5418160/store-and-retrieve-a-class-object-in-shared-preference
