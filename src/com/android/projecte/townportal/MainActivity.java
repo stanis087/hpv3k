@@ -154,14 +154,17 @@ public class MainActivity extends Activity {
         case R.id.btnReligion:{
         	
         	openPlaceList( this.religionTitle, this.vReligion );
+        	break;
         }
         
         case R.id.btnMedical:{
         	openPlaceList( this.medicalTitle, this.vMedical	);
+        	break;
         }
         
         case R.id.btnLodging:{
         	openPlaceList( this.lodgingTitle, this.vLodging );
+        	break;
         }
         default:
             break;
