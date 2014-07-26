@@ -2,7 +2,7 @@
  android:id="@+id/rowTextView"   
  android:layout_width="fill_parent"   
  android:layout_height="wrap_content"  
- android:padding="3dp"  
+ android:padding="7dp"  
  android:textSize="16sp"
  android:color="#FFFFFF"
  style="@style/spinnerItemsStyle">  
