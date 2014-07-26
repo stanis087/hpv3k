@@ -143,13 +143,13 @@ public class MainActivity extends Activity {
             break;
         }
         
-        /*case R.id.btnLocations:{
+        case R.id.btnManageLocations:{
             
             Intent locationsIntent = new Intent( this, ManageLocationsActivity.class );
             startActivity( locationsIntent );
             
             break;
-        }*/
+        }
         
         case R.id.btnReligion:{
         	

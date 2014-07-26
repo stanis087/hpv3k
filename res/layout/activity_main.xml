@@ -267,19 +267,20 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <ImageButton android:id="@+id/btnMisc1"
+            <ImageButton android:id="@+id/btnManageLocations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/employment"
+                android:background="@drawable/locations"
                 android:contentDescription="@string/empl_text"
                 android:onClick="onClick"
-                android:visibility="invisible" />
+                android:visibility="visible" />
 
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/empl_text"
+                android:text="@string/locations_text"
                 android:textSize="12sp"
-                android:visibility="invisible" />           
+                android:visibility="visible" />
+            
         </LinearLayout>
 
         <LinearLayout android:layout_width="0dp"

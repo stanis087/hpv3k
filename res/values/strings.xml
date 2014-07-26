@@ -37,6 +37,7 @@
     <string name="manage_themes">Themes</string>
     <string name="select_themes">Select a Theme</string>
     <string name="exit">Exit App</string>
+    <string name="locations_text">Manage Locations</string>
 	
 	<string-array name="locations">
         <item>My Location</item>
