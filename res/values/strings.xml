@@ -34,6 +34,7 @@
     <string name="get_directions">Get Directions</string>
     <string name="find_movie_showtimes">Find Movie Showtimes</string>
     <string name="manage_locations">Manage Locations</string>
+    <string name="manage_themes">Themes</string>
     <string name="exit">Exit App</string>
     <string name="locations_text">Manage Locations</string>
 	

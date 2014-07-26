@@ -67,6 +67,11 @@
             android:label="@string/manage_locations"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+        <activity
+            android:name="com.android.projecte.townportal.ManageThemes"
+            android:label="@string/manage_themes"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>
