@@ -24,6 +24,8 @@ import org.jsoup.select.Elements;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /*
@@ -33,17 +35,17 @@ import android.widget.TextView;
 final public class EmploymentActivity extends FeedActivity {
     
     private String jobsSource;
+    private ListView lvFeed;
     
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
 
         super.onCreate( savedInstanceState );
-        
+        lvFeed = (ListView)findViewById(R.id.feedList);
         // JavaScript makes the Monster mobile site function better
         this.webView.getSettings().setJavaScriptEnabled( true );
         
-
 
         // Get strings
         this.jobsSource= findJobRss(getString(R.string.jobsRss));
@@ -52,8 +54,10 @@ final public class EmploymentActivity extends FeedActivity {
         
         // Set title and courtesy
         ((TextView) findViewById( R.id.title ) ).setText( this.title );
+
         this.courtesyText.setText( getString( R.string.emplCourtesy ) );
         
+        buildToTheme();
         new FeedTask( this.context ).execute();
     }
     
@@ -150,5 +154,12 @@ final public class EmploymentActivity extends FeedActivity {
         }
         //Log.i("Job Feed", intial);
         return intial;
+    }
+    
+    private void buildToTheme(){
+    	lvFeed.setBackgroundColor(getResources().getColor(ThemeUtilities.getBgColor()));
+    	this.courtesyText.setTextColor(getResources().getColor(ThemeUtilities.getTextColor()));
+    	View view = this.getWindow().getDecorView();
+    	view.setBackgroundColor(getResources().getColor(ThemeUtilities.getBgColor()));
     }
 }

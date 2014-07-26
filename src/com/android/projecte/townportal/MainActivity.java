@@ -242,5 +242,6 @@ public class MainActivity extends Activity {
     	}
     	View view = this.getWindow().getDecorView();
     	view.setBackgroundColor(getResources().getColor(ThemeUtilities.getBgColor()));
+    	
     }
 }

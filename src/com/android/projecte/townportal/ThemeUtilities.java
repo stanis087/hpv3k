@@ -26,6 +26,8 @@ public class ThemeUtilities {
 			Log.i("ThemeUtilities", "Fsu theme selected");
 			break;
 		case THEME_ANDROID:
+			setTextColor(R.color.android_theme_text);
+			setBgColor(R.color.android_theme_bg);
 			break;
 		default:
 			break;

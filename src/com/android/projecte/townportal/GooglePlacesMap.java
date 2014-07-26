@@ -122,7 +122,7 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
                     text1.setGravity( Gravity.CENTER );
                     text1.setTextColor( getContext().getResources().getColor( R.color.darkBlue ) );
                 }
-                
+                buildToTheme();
                 return convertView;
             }
         };
@@ -696,4 +696,11 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
 		Log.v("GooglePlacesMap.onStop", "Stopping");
 		com.android.projecte.townportal.Locations.savePreferences(getActivity().getApplicationContext(), locations);
 	}
+	
+    private void buildToTheme(){
+    	placesList.setBackgroundColor(getResources().getColor(ThemeUtilities.getBgColor()));
+    	placesList.setCacheColorHint(getResources().getColor(ThemeUtilities.getBgColor()));
+    	spinner.setBackgroundColor(getResources().getColor(ThemeUtilities.getBgColor()));
+    	//spinner.set
+    }
 }

@@ -10,7 +10,7 @@
     <color name="fsu_theme_bg">#782F40</color>
     <color name="beach_theme_text">#000000</color>
     <color name="beach_theme_bg">#FFFFFF</color>
-    <color name="android_theme_text">#000000</color>
+    <color name="android_theme_text">#A4C639</color>
     <color name="android_theme_bg">#000000</color>
         
 </resources>
