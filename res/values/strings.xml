@@ -35,11 +35,18 @@
     <string name="find_movie_showtimes">Find Movie Showtimes</string>
     <string name="manage_locations">Manage Locations</string>
     <string name="manage_themes">Themes</string>
+    <string name="select_themes">Select a Theme</string>
     <string name="exit">Exit App</string>
 	
 	<string-array name="locations">
         <item>My Location</item>
         <item>Panama City</item>
+    </string-array>
+    
+	<string-array name="theme_array">
+        <item>Beach</item>
+        <item>FSU</item>
+        <item>Android</item>
     </string-array>
 	
 </resources>
