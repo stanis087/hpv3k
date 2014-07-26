@@ -6,7 +6,7 @@ public class Location {
 	private String name, city, state;
 	private double lat, lng;
 	private Boolean removable = true, selected = false;
-	int zip;
+	int zip = 0;
 
 	Location(String name, double lat, double lng) {
 		this.name = name;
@@ -53,6 +53,10 @@ public class Location {
 	
 	public String getState() {
 		return this.state;
+	}
+	
+	public int getZip() {
+		return this.zip;
 	}
 
 	public Boolean isRemovable() {

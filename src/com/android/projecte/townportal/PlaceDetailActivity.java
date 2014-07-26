@@ -37,11 +37,14 @@ public class PlaceDetailActivity extends Activity {
     private AtomicInteger loadingCounter;
     private List<PhotoTask> photoTasks = new Vector<PhotoTask>();
     private PlaceDetail detail; // needed for scope resolution
+    private Locations locations;
 
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
 
         super.onCreate( savedInstanceState );
+        
+        locations = Locations.loadPreferences(this);
 
         this.gpSearch = new GooglePlacesSearch( getIntent().getExtras().getString( "gpSearchType" ), 
                 getIntent().getExtras().getString( "gpSearchGeoLocation" ), 1 );
@@ -113,7 +116,11 @@ public class PlaceDetailActivity extends Activity {
 				
 				@Override
 				public void onClick(View v) {
-					Uri uri = Uri.parse("http://www.fandango.com/dragon+ball+z3a+battle+of+gods_174747/movietimes?location=33870&wssaffid=11836&wssac=123");
+					
+					int zip = locations.getLocation(locations.getSelected()).getZip();
+					
+					//Uri uri = Uri.parse("http://www.fandango.com/dragon+ball+z3a+battle+of+gods_174747/movietimes?location=" + Integer.toString(zip) + "&wssaffid=11836&wssac=123");
+					Uri uri = Uri.parse("http://www.fandango.com/movietimes?location=" + Integer.toString(zip));
 	                startActivity(new Intent(Intent.ACTION_VIEW, uri));
 					
 				}

@@ -147,6 +147,7 @@ public class ManageLocationsActivity extends Activity {
 						.getJSONObject(0).getJSONArray("address_components");
 
 				String city = "", state = "";
+				int zip = 00000;
 
 				for (int j = 0; j < address_components.length(); j++) {
 
@@ -165,11 +166,18 @@ public class ManageLocationsActivity extends Activity {
 						state = jotwo.getString("short_name");
 						// Log.v("state:", state );
 					}
+					
+					// extract state
+					if (jotwo.getJSONArray("types").getString(0)
+							.equals("postal_code")) {
+						state = jotwo.getString("short_name");
+						// Log.v("state:", state );
+					}
 
 				}
 
 				// here is where I add the Location to Vector<Locations>
-				locations.addLocation(new Location(location, lat, lng, city, state, 1));
+				locations.addLocation(new Location(location, lat, lng, city, state, zip));
 				
 				Toast.makeText(getApplicationContext(), location + " added.", Toast.LENGTH_LONG).show();
 				listAdapter.notifyDataSetChanged();
@@ -193,9 +201,9 @@ public class ManageLocationsActivity extends Activity {
 		
 		
 		if(locations.removeLocation( position ))
-			Toast.makeText(getApplicationContext(), "Location removed.", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Location removed.", Toast.LENGTH_SHORT).show();
 		else
-			Toast.makeText(getApplicationContext(), "Location was not removed.", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Cannot remove this location.", Toast.LENGTH_SHORT).show();
 		
 		
 		
