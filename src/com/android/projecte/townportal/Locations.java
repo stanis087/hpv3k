@@ -43,9 +43,9 @@ public class Locations {
 	}
 
 	// add location method - standard
-	public void addLocation(String name) {
-
-		new RequestTask().execute(name);
+	public void addLocation(Location l) {
+		
+		this.locations.add(l);
 
 	}
 
@@ -208,69 +208,5 @@ public class Locations {
 	 * 
 	 * for ( PhotoTask task : this.RequestTasks ) task.cancel( true ); }
 	 */
-
-	class RequestTask extends AsyncTask<String, Void, JSONObject> {
-
-		String location;
-
-		@Override
-		// do fetch in background
-		protected JSONObject doInBackground(String... params) {
-
-			location = params[0];
-
-			return Geocoding.getLocationInfo(params[0]);
-
-		}
-
-		// do stuff with obtained data
-		protected void onPostExecute(JSONObject ret) {
-
-			try {
-				// parse lat/lng
-				double lat = ret.getJSONArray("results").getJSONObject(0)
-						.getJSONObject("geometry").getJSONObject("location")
-						.getDouble("lat");
-				double lng = ret.getJSONArray("results").getJSONObject(0)
-						.getJSONObject("geometry").getJSONObject("location")
-						.getDouble("lng");
-
-				// parse city/state now
-				JSONArray address_components = ret.getJSONArray("results")
-						.getJSONObject(0).getJSONArray("address_components");
-
-				String city = "", state = "";
-
-				for (int j = 0; j < address_components.length(); j++) {
-
-					JSONObject jotwo = address_components.getJSONObject(j);
-
-					// extract city
-					if (jotwo.getJSONArray("types").getString(0)
-							.equals("locality")) {
-						city = jotwo.getString("long_name");
-						// Log.v("city:", city );
-					}
-
-					// extract state
-					if (jotwo.getJSONArray("types").getString(0)
-							.equals("administrative_area_level_1")) {
-						state = jotwo.getString("short_name");
-						// Log.v("state:", state );
-					}
-
-				}
-
-				// here is where I add the Location to Vector<Locations>
-				locations.add(new Location(location, lat, lng, city, state, 1));
-
-			} catch (JSONException e1) {
-				e1.printStackTrace();
-
-			}
-
-		}
-
-	}
 
 }

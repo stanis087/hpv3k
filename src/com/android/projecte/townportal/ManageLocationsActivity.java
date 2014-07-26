@@ -2,9 +2,14 @@ package com.android.projecte.townportal;
 
 import java.util.Vector;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -110,13 +115,78 @@ public class ManageLocationsActivity extends Activity {
 		});
 		
 	}
+	
+	class RequestTask extends AsyncTask<String, Void, JSONObject> {
+
+		String location;
+
+		@Override
+		// do fetch in background
+		protected JSONObject doInBackground(String... params) {
+
+			location = params[0];
+
+			return Geocoding.getLocationInfo(params[0]);
+
+		}
+
+		// do stuff with obtained data
+		protected void onPostExecute(JSONObject ret) {
+
+			try {
+				// parse lat/lng
+				double lat = ret.getJSONArray("results").getJSONObject(0)
+						.getJSONObject("geometry").getJSONObject("location")
+						.getDouble("lat");
+				double lng = ret.getJSONArray("results").getJSONObject(0)
+						.getJSONObject("geometry").getJSONObject("location")
+						.getDouble("lng");
+
+				// parse city/state now
+				JSONArray address_components = ret.getJSONArray("results")
+						.getJSONObject(0).getJSONArray("address_components");
+
+				String city = "", state = "";
+
+				for (int j = 0; j < address_components.length(); j++) {
+
+					JSONObject jotwo = address_components.getJSONObject(j);
+
+					// extract city
+					if (jotwo.getJSONArray("types").getString(0)
+							.equals("locality")) {
+						city = jotwo.getString("long_name");
+						// Log.v("city:", city );
+					}
+
+					// extract state
+					if (jotwo.getJSONArray("types").getString(0)
+							.equals("administrative_area_level_1")) {
+						state = jotwo.getString("short_name");
+						// Log.v("state:", state );
+					}
+
+				}
+
+				// here is where I add the Location to Vector<Locations>
+				locations.addLocation(new Location(location, lat, lng, city, state, 1));
+				
+				Toast.makeText(getApplicationContext(), location + " added.", Toast.LENGTH_LONG).show();
+				listAdapter.notifyDataSetChanged();
+				Log.v("Locations.addLocation: ", "Added: " + location + " - new size: " + Integer.toString(locations.getSize()) );
+
+			} catch (JSONException e1) {
+				e1.printStackTrace();
+
+			}
+
+		}
+
+	}
 
 	// invoke methods to store in Locations and to add to ListView
 	private void addLocation(String location) {
-		locations.addLocation(location);
-		Toast.makeText(getApplicationContext(), location + " added.", Toast.LENGTH_LONG).show();
-		listAdapter.notifyDataSetChanged();
-		Log.v("Locations.addLocation: ", "Added: " + location + " - new size: " + Integer.toString(locations.getSize()) );
+		new RequestTask().execute(location);
 	}
 	
 	private void removeLocation(int position){
