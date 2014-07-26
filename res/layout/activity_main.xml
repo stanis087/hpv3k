@@ -31,7 +31,9 @@
                 android:contentDescription="@string/food_text"
                 android:onClick="onClick" />
 
-            <TextView android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvFood" 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/food_text"
                 android:textSize="12sp" />
@@ -51,7 +53,9 @@
                 android:contentDescription="@string/entertainment_text"
                 android:onClick="onClick" />
 
-            <TextView android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/tvEntertainment"  
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/entertainment_text"
                 android:textSize="12sp" />
@@ -71,7 +75,9 @@
                 android:contentDescription="@string/shopping_text"
                 android:onClick="onClick" />
 
-            <TextView android:layout_width="wrap_content"
+            <TextView 
+                android:id="@+id/tvShopping" 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/shopping_text"
                 android:textSize="12sp" />
@@ -103,7 +109,9 @@
                 android:contentDescription="@string/schools_text"
                 android:onClick="onClick" />
 
-            <TextView android:layout_width="wrap_content"
+            <TextView 
+                android:id="@+id/tvSchools" 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/schools_text"
                 android:textSize="12sp" />
@@ -123,7 +131,9 @@
                 android:contentDescription="@string/empl_text"
                 android:onClick="onClick" />
 
-            <TextView android:layout_width="wrap_content"
+            <TextView 
+                android:id="@+id/tvEmployment"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/empl_text"
                 android:textSize="12sp" />
@@ -143,7 +153,9 @@
                 android:contentDescription="@string/news_text"
                 android:onClick="onClick" />
 
-            <TextView android:layout_width="wrap_content"
+            <TextView 
+                android:id="@+id/tvNews"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/news_text"
                 android:textSize="12sp" />
@@ -177,6 +189,7 @@
                 android:onClick="onClick" />
 
             <TextView
+                android:id="@+id/tvLodging" 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lodge_text"
@@ -197,7 +210,9 @@
                 android:onClick="onClick"
                 android:visibility="visible" />
 
-            <TextView android:layout_width="wrap_content"
+            <TextView 
+                android:id="@+id/tvMedical" 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/medical_text"
                 android:textSize="12sp"
@@ -219,7 +234,9 @@
                 android:onClick="onClick"
                 android:visibility="visible" />
 
-            <TextView android:layout_width="wrap_content"
+            <TextView 
+                android:id="@+id/tvReligion" 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/religious_text"
                 android:textSize="12sp"
@@ -275,7 +292,9 @@
                 android:onClick="onClick"
                 android:visibility="visible" />
 
-            <TextView android:layout_width="wrap_content"
+            <TextView 
+                android:id="@+id/tvManageLocations" 
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/locations_text"
                 android:textSize="12sp"

@@ -9,10 +9,12 @@ import java.util.Vector;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /*
@@ -22,6 +24,8 @@ import android.widget.Toast;
  */
 public class MainActivity extends Activity {
 
+	private Vector<TextView> vTextViews = new Vector<TextView>();
+	
     // Used for constructing types of places to views
     private Vector<PlaceType> vFood = new Vector<PlaceType>(),
                               vEnt = new Vector<PlaceType>(),
@@ -44,6 +48,19 @@ public class MainActivity extends Activity {
         requestWindowFeature( Window.FEATURE_CUSTOM_TITLE );
         setContentView( R.layout.activity_main );
         getWindow().setFeatureInt( Window.FEATURE_CUSTOM_TITLE, R.layout.custom_title );
+        
+        // Assign TextViews
+        vTextViews.add((TextView)findViewById(R.id.tvFood));
+        vTextViews.add((TextView)findViewById(R.id.tvEntertainment));
+        vTextViews.add((TextView)findViewById(R.id.tvShopping));
+        vTextViews.add((TextView)findViewById(R.id.tvSchools));
+        vTextViews.add((TextView)findViewById(R.id.tvEmployment));
+        vTextViews.add((TextView)findViewById(R.id.tvNews));
+        vTextViews.add((TextView)findViewById(R.id.tvLodging));
+        vTextViews.add((TextView)findViewById(R.id.tvMedical));
+        vTextViews.add((TextView)findViewById(R.id.tvReligion));
+        vTextViews.add((TextView)findViewById(R.id.tvManageLocations));
+        buildToTheme();
         
         // Get titles
         this.foodTitle = getString( R.string.food_text );
@@ -170,7 +187,11 @@ public class MainActivity extends Activity {
             break;
         }
     }
-
+    @Override
+    protected void onResume() {
+    	super.onResume();
+    	buildToTheme();
+    }
     /*
      * Open Place List
      * Description: Start a MapActivity based off certain place info.
@@ -214,4 +235,12 @@ public class MainActivity extends Activity {
               return super.onOptionsItemSelected(item);  
         }  
     } 
+    
+    private void buildToTheme(){
+    	for(int i = 0; i < vTextViews.size(); ++i){
+    		vTextViews.get(i).setTextColor(getResources().getColor(ThemeUtilities.getTextColor()));
+    	}
+    	View view = this.getWindow().getDecorView();
+    	view.setBackgroundColor(getResources().getColor(ThemeUtilities.getBgColor()));
+    }
 }
