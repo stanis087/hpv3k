@@ -6,6 +6,9 @@
     <item android:id="@+id/menu_locations"
           android:title="@string/manage_locations" />
     
+    <item android:id="@+id/menu_themes"
+          android:title="@string/manage_themes" />
+    
     <item android:id="@+id/menu_exit"
           android:title="@string/exit" />
  

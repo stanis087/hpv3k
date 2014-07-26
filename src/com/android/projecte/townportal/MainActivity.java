@@ -188,7 +188,7 @@ public class MainActivity extends Activity {
     
     public boolean onCreateOptionsMenu(Menu menu) {  
         // Inflate the menu; this adds items to the action bar if it is present.  
-        getMenuInflater().inflate(R.menu.menu_main, menu);//Menu Resource, Menu  
+        getMenuInflater().inflate(R.menu.menu_main, menu);//Menu Resource, Menu 
         return true;  
     }  
       
@@ -196,11 +196,17 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {  
         switch (item.getItemId()) {  
             case R.id.menu_locations:  
-              Toast.makeText(getApplicationContext(),"Managing Locations",Toast.LENGTH_LONG).show();
-              Intent locationsIntent = new Intent( this, ManageLocationsActivity.class );
-              startActivity( locationsIntent );
-              return true;
-              
+            	Toast.makeText(getApplicationContext(),"Managing Locations",Toast.LENGTH_LONG).show();
+            	Intent locationsIntent = new Intent( this, ManageLocationsActivity.class );
+            	startActivity( locationsIntent );
+            	return true;
+            
+            case R.id.menu_themes:
+	        	Toast.makeText(getApplicationContext(), "Managing Themes", Toast.LENGTH_LONG).show();
+	        	Intent themeIntent = new Intent(this, ManageThemes.class);
+	        	startActivity( themeIntent );
+	        	return true;
+            	
             case R.id.menu_exit:  
             	MainActivity.this.finish();
                 return true;     
