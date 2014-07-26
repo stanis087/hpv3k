@@ -154,6 +154,11 @@ public class Locations {
 		}
 		return 0; // default to first
 	}
+	
+	public static Location returnSelected(Context con){
+		Locations list = Locations.loadPreferences(con);
+		return list.getLocation(list.getSelected());
+	}
 
 	public void updateMyLocation(double lat, double lng) {
 		

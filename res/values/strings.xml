@@ -27,7 +27,7 @@
     <string name="newsSourceFsu">http://news.fsu.edu/</string>
     <string name="newsViewMore">http://m.newsherald.com</string>
     <string name="topNews">Top%20News</string>
-    <string name="jobsRss">http://rss.jobsearch.monster.com/rssquery.ashx?where=Houston%2C+TX</string>
+    <string name="jobsRss">http://rss.jobsearch.monster.com/rssquery.ashx?where=</string>
     <string name="jobsViewMore">http://m.monster.com/JobSearch/Search?jobtitle=&amp;keywords=&amp;where=Panama+City%2C+FL</string>
     <string name="placePhoto">Place Photo</string>
     <string name="locations_prompt">Select Location</string>

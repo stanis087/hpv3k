@@ -43,8 +43,10 @@ final public class EmploymentActivity extends FeedActivity {
         // JavaScript makes the Monster mobile site function better
         this.webView.getSettings().setJavaScriptEnabled( true );
         
+
+
         // Get strings
-        this.jobsSource = getString( R.string.jobsRss );
+        this.jobsSource= findJobRss(getString(R.string.jobsRss));
         this.title = getString( R.string.empl_text );
         this.seeMoreUrl = getString( R.string.jobsViewMore );
         
@@ -130,5 +132,23 @@ final public class EmploymentActivity extends FeedActivity {
             url = matcher.replaceFirst( ".com/" + matcher.group( 1 ) );
         
         return url;
+    }
+     
+    protected String findJobRss(String intial) {
+        // Find proper job feed, needs location data
+        Location currentLocation = Locations.returnSelected(this);
+        String[] parts = currentLocation.getCity().split(" ");
+        
+        // Loop through string split to join with '+'
+        for(int i = 0; i < parts.length; ++i)
+        {
+        	intial += parts[i];
+        	if(i+1 < parts.length)
+        		intial += "+";
+        	else
+        		intial += "%2C+" + currentLocation.getState();
+        }
+        //Log.i("Job Feed", intial);
+        return intial;
     }
 }
