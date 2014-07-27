@@ -266,14 +266,14 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:background="@drawable/schools"
-		        android:contentDescription="Locations"
+		        android:contentDescription="@+id/btnManageLocations"
 		        android:onClick="onClick"
 		        android:visibility="invisible" />
 
 		    <TextView
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:text="Locations"
+		        android:text="@+id/btnManageLocations"
 		        android:textSize="12sp"
 		        android:visibility="invisible" />
 		</LinearLayout>
@@ -292,10 +292,11 @@
                 android:onClick="onClick"
                 android:visibility="visible" />
 
-            <TextView 
-                android:id="@+id/tvManageLocations" 
+            <TextView
+                android:id="@+id/tvManageLocations"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:text="@string/locations_text"
                 android:textSize="12sp"
                 android:visibility="visible" />
