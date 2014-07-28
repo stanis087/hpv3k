@@ -93,6 +93,7 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
         spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_items); // The drop down view
         spinner.setAdapter(spinnerArrayAdapter);       
         
+        
         this.spinner.setOnItemSelectedListener( this );
         
         this.mapView.getSettings().setJavaScriptEnabled( true );
@@ -115,12 +116,12 @@ public class GooglePlacesMap extends Fragment implements AdapterView.OnItemSelec
                 TextView text1 = (TextView) convertView.findViewById( android.R.id.text1 );
                 
                 text1.setText( place.name );
-                
+                text1.setTextColor(getResources().getColor(ThemeUtilities.getTextColor()));
                 // Center see more text
                 if ( position == 0 && place.name.equals( "Refresh" ) ) {
                 	
                     text1.setGravity( Gravity.CENTER );
-                    text1.setTextColor( getContext().getResources().getColor( R.color.darkBlue ) );
+                    text1.setTextColor( getContext().getResources().getColor( ThemeUtilities.getTextColor()) );
                 }
                 buildToTheme();
                 return convertView;

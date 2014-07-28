@@ -18,7 +18,6 @@ public class ThemeUtilities {
 		case THEME_BEACH:
 			setTextColor(R.color.beach_theme_text);
 			setBgColor(R.color.beach_theme_bg);
-			
 			break;
 		case THEME_FSU:
 			setTextColor(R.color.fsu_theme_text);
@@ -50,4 +49,5 @@ public class ThemeUtilities {
 	public static void setBgColor(int bgColor) {
 		ThemeUtilities.bgColor = bgColor;
 	}
+
 }

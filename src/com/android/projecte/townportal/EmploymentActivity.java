@@ -152,12 +152,13 @@ final public class EmploymentActivity extends FeedActivity {
         	else
         		intial += "%2C+" + currentLocation.getState();
         }
-        //Log.i("Job Feed", intial);
+        //Log.i("Job Feed", initial);
         return intial;
     }
     
     private void buildToTheme(){
     	lvFeed.setBackgroundColor(getResources().getColor(ThemeUtilities.getBgColor()));
+    	lvFeed.setCacheColorHint(getResources().getColor(ThemeUtilities.getBgColor()));
     	this.courtesyText.setTextColor(getResources().getColor(ThemeUtilities.getTextColor()));
     	View view = this.getWindow().getDecorView();
     	view.setBackgroundColor(getResources().getColor(ThemeUtilities.getBgColor()));

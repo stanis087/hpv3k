@@ -18,6 +18,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 /*
@@ -53,10 +54,11 @@ final public class NewsActivity extends FeedActivity {
         try {
             
             // Download news items
-            Document htmlDoc = Jsoup.connect( String.format( newsSource + "default.aspx?section=%s", 
-                    getString( R.string.topNews ) ) ).get();
+            Document htmlDoc = Jsoup.connect( newsSource).get();
+            Log.i("NewsSource", newsSource);
             
             Elements newsItems = htmlDoc.select( "li[data-icon]" );
+            Log.i("newsItems", newsItems.toString());
             
             // Iterate through all items
             for ( Element element : newsItems ) {

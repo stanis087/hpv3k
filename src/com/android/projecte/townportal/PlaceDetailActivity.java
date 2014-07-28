@@ -31,6 +31,7 @@ public class PlaceDetailActivity extends Activity {
     private TextView nameTextView, ratingTextView, priceTextView, 
                 addressTextView, phoneNumberTextView, websiteTextView,
                 loadingText, reviewsText;
+    private Vector<TextView> vTextViews = new Vector<TextView>();
     private ImageView photoImageView;
     
     private GooglePlacesSearch gpSearch;
@@ -65,6 +66,14 @@ public class PlaceDetailActivity extends Activity {
         this.photoImageView = (ImageView) findViewById( R.id.photoImage );
         this.loadingText = (TextView) findViewById( R.id.loading );
         this.reviewsText = (TextView) findViewById(R.id.reviews);
+        vTextViews.add(nameTextView);
+        vTextViews.add(ratingTextView);
+        vTextViews.add(priceTextView);
+        vTextViews.add(addressTextView);
+        vTextViews.add(phoneNumberTextView);
+        vTextViews.add(websiteTextView);
+        vTextViews.add(loadingText);
+        vTextViews.add(reviewsText);
         
         Place place = (Place) getIntent().getExtras().getSerializable("place");
         detail = (PlaceDetail) getIntent().getExtras().getSerializable("placeDetail");
@@ -140,7 +149,7 @@ public class PlaceDetailActivity extends Activity {
 		    }
 		});
         
-        
+        buildToTheme();
     }
     
     @Override
@@ -232,5 +241,14 @@ public class PlaceDetailActivity extends Activity {
             
         return result;
     }
-
+    
+    private void buildToTheme(){
+    	View view = this.getWindow().getDecorView();
+    	view.setBackgroundColor(getResources().getColor(ThemeUtilities.getBgColor()));
+    	for(int i = 0; i < vTextViews.size(); ++i)
+    	{
+    		vTextViews.get(i).setTextColor(getResources().getColor(ThemeUtilities.getTextColor()));
+    	}
+    	
+    }
 }
